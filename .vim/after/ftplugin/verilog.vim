@@ -58,6 +58,51 @@ inoremap <buffer> <silent> <nowait> <M-j> <C-o>:call MultiLineComment()<CR>
 snoremap <buffer> <silent> <nowait> <M-j> <C-o>:call MultiLineComment()<CR>
 xnoremap <buffer> <silent> <nowait> <M-j> :call MultiLineComment()<CR>
 
+function! RenameCmlToSnk()
+    let l:wordList = []
+    let l:rplcList = []
+    for l in range(line(0), line('$'))
+        if getline(l) != "^\/\/"
+            if (stridx(getline(l), 'input ') != -1 || stridx(getline(l), 'output ') != -1 ) 
+                " store inputs/outputs 
+                let l:input = substitute(getline(l), ",.*", "", "g")
+                let l:input = split(l:input, ' ')
+                "echo l:input[-1]
+                call add(l:wordList, [l:input[-1], 1])
+            elseif (stridx(getline(l), 'logic ') != -1 || stridx(getline(l), 'wire ') != -1 || stridx(getline(l), 'reg ') != -1)
+                let l:logic = substitute(getline(l), ";.*", "", "g")
+                let l:logic = split(l:logic, ' ')
+                "echo l:logic[-1]
+                call add(l:wordList, [l:logic[-1], 0])
+            endif
+        endif
+    endfor
+
+    for i in l:wordList
+        let l:str = i[0]
+        let l:i_new = substitute(i[0], "\\\([a-z]\\\)\\\([A-Z]\\\)", "\\1\\_\\l\\2", "g")
+        let l:str = l:str." -> ".l:i_new
+        let l:i_new = substitute(l:i_new, "\\\([A-Z]\\\)\\\([A-Z]\\\)", "\\l\\1\\l\\2", "g")
+        let l:str = l:str." -> ".l:i_new
+        let l:i_new = substitute(l:i_new, "\\\([A-Z]\\\)\\\([a-z]\\\)", "\\l\\1\\2", "g")
+        let l:str = l:str." -> ".l:i_new
+        
+        let l:i_new = substitute(l:i_new, "\_in", "\_i", "g")
+        let l:str = l:str." -> ".l:i_new
+        let l:i_new = substitute(l:i_new, "\_out", "\_o", "g")
+        let l:str = l:str." -> ".l:i_new
+        let l:i_new = substitute(l:i_new, "async\_rst", "arst", "g")
+        let l:str = l:str." -> ".l:i_new
+        let l:i_new = substitute(l:i_new, "sync\_rst", "srst", "g")         
+        let l:str = l:str." -> ".l:i_new
+        " echo l:str
+        exec "%s/\\\<".i[0]."\\\>/".l:i_new."/g" 
+        echo l:str
+    endfor
+
+    echo l:wordList
+endfunction
+
 function! AddLineComment()
    if len(getline('.')) > 0
       silent! :s/$/ gn\/ /g

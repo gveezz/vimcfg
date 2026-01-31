@@ -22,6 +22,16 @@ let g:skip_defaults_vim=1
 "" let g:netrw_keepj = "keepj"
 "" let g:netrw_sort_options = "i"
 
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
 let g:vimfm_force_delete = 1
 let g:vimfm_show_hidden_files = 1
 let g:vimfm_linkid_str = '>'
@@ -93,7 +103,7 @@ set number
 set guifont=Monospace\ 10
 set background=dark
 set laststatus=2
-set statusline=\ %{GetMode()}
+set statusline=\ %{GetMode()}\ 
 set statusline+=\ %=%{expand('%:p:~')}\ %y\ %m%r
 set statusline+=\ b#%n,\ w#%{winnr()},\ t#%{tabpagenr()}
 set statusline+=\ (%l\/\%L,\%c)\ 
@@ -220,12 +230,7 @@ augroup Vim
    autocmd ModeChanged [nvV\x16]*:* let &l:rnu = mode() =~# '^[nvV\x16]'
    " Trigger norelative number when leaving visual mode
    autocmd ModeChanged *:[nvV\x16]* let &l:rnu = mode() =~# '^[nvV\x16]'
-   autocmd CmdlineLeavePre * if char2nr(v:char) == 13 && 
-                             \ getcmdtype() == ':' && 
-                             \ getcmdline()[0:1] == '%s' && 
-                             \ stridx(getcmdline(), '\/g') != -1 | 
-                             \ stridx(getcmdline(), ' | normal! g``') == -1 | 
-                             \ call setcmdline(getcmdline().' | normal! g``') | endif
+   " autocmd CmdlineLeavePre * if char2nr(v:char) == 13 && getcmdtype() == ':' && getcmdline()[0:1] == '%s' && stridx(getcmdline(), '\/g') != -1 | stridx(getcmdline(), ' | normal! g``') == -1 | call setcmdline(getcmdline().' | normal! g``') | endif
 augroup END
 
 augroup AutoFoldColumn
