@@ -58,35 +58,62 @@ inoremap <buffer> <silent> <nowait> <M-j> <C-o>:call MultiLineComment()<CR>
 snoremap <buffer> <silent> <nowait> <M-j> <C-o>:call MultiLineComment()<CR>
 xnoremap <buffer> <silent> <nowait> <M-j> :call MultiLineComment()<CR>
 
-function! RenameCmlToSnk()
+function! RenameCmlToSnk(br, wf)
     let l:wordList = []
     let l:rplcList = []
-    for l in range(line(0), line('$'))
-        if getline(l) != "^\/\/"
+    for l in range(line(1), line('$'))
+        if getline(l) !~ '^\/\/' && getline(l) !~ '^\s\+\/\/'
             if (stridx(getline(l), 'input ') != -1 || stridx(getline(l), 'output ') != -1 ) 
                 " store inputs/outputs 
                 let l:input = substitute(getline(l), ",.*", "", "g")
                 let l:input = split(l:input, ' ')
                 "echo l:input[-1]
-                call add(l:wordList, [l:input[-1], 1])
+                call add(l:wordList, l:input[-1])
             elseif (stridx(getline(l), 'logic ') != -1 || stridx(getline(l), 'wire ') != -1 || stridx(getline(l), 'reg ') != -1)
                 let l:logic = substitute(getline(l), ";.*", "", "g")
                 let l:logic = split(l:logic, ' ')
                 "echo l:logic[-1]
-                call add(l:wordList, [l:logic[-1], 0])
+                call add(l:wordList, l:logic[-1])
+            " elseif (stridx(getline(l), 'localparam ') != -1 || stridx(getline(l), 'parameter ') != -1)
+            "     let l:param = split(getline(l), '=')
+            "     let l:param = split(l:param[0], ' ')[1]
+            "     echo l:param
+            "     call add(l:wordList, [l:param, '])
+            " elseif getline(l) =~# '\..*(.*),'
+            "     let l:ioinst = split(getline(l), '(')
+            "     let l:io = substitute(l:ioinst[0], "\\s\\+\\.", "", "g")
+            "     let l:io = substitute(l:io, "\\s\\+", "", "g")
+            "     " echo l:io
+            "     call add(l:wordList, [l:io, 1])
             endif
         endif
     endfor
+    
 
-    for i in l:wordList
-        let l:str = i[0]
-        let l:i_new = substitute(i[0], "\\\([a-z]\\\)\\\([A-Z]\\\)", "\\1\\_\\l\\2", "g")
+    " let l:idx = 0
+    " for i in l:wordList
+    "     let l:idx = l:idx + 1
+    "     let l:iidx = 0
+    "     for ii in l:wordList 
+    "         let l:iidx = l:iidx + 1
+    "         if i[1] == 1 && i[0] == ii[0] && ii[1] == 0
+    "             call remove(l:wordList, l:idx)
+    "             call remove(l:wordList, l:iidx)
+    "         endif
+    "     endfor
+    " endfor
+    
+    let l:sedFile = "rplc.vsed"
+    call delete(l:sedFile)
+    let l:sedList = []
+    for i_old in l:wordList
+        let l:str = i_old
+        let l:i_new = substitute(i_old, "\\\([a-z]\\\)\\\([A-Z]\\\)", "\\1\\_\\l\\2", "g")
         let l:str = l:str." -> ".l:i_new
         let l:i_new = substitute(l:i_new, "\\\([A-Z]\\\)\\\([A-Z]\\\)", "\\l\\1\\l\\2", "g")
         let l:str = l:str." -> ".l:i_new
         let l:i_new = substitute(l:i_new, "\\\([A-Z]\\\)\\\([a-z]\\\)", "\\l\\1\\2", "g")
         let l:str = l:str." -> ".l:i_new
-        
         let l:i_new = substitute(l:i_new, "\_in", "\_i", "g")
         let l:str = l:str." -> ".l:i_new
         let l:i_new = substitute(l:i_new, "\_out", "\_o", "g")
@@ -95,12 +122,22 @@ function! RenameCmlToSnk()
         let l:str = l:str." -> ".l:i_new
         let l:i_new = substitute(l:i_new, "sync\_rst", "srst", "g")         
         let l:str = l:str." -> ".l:i_new
-        " echo l:str
-        exec "%s/\\\<".i[0]."\\\>/".l:i_new."/g" 
         echo l:str
+        if (a:br) 
+            exec "%s/\\\<".i_old."\\\>/".l:i_new."/g" 
+        endif
+        " echo l:str
+        let l:sedStr = "s/\\\<".i_old."\\\>/".l:i_new."/g"
+        call add(l:sedList, l:sedStr)
     endfor
 
-    echo l:wordList
+    if (a:wf == 1) 
+        call writefile(l:sedList, l:sedFile, 'a')
+    else
+        echo l:sedList
+    endif
+
+    "echo l:wordList
 endfunction
 
 function! AddLineComment()
@@ -163,8 +200,8 @@ function! AlignParams() range
 endfunction
 
 function! AlignIoInstance() range
-   silent! exec ":".a:firstline.",".a:lastline."EasyAlign /\./ g/\\s\\+\\./ {'lm':0,'rm':0}"
-   silent! exec ":".a:firstline.",".a:lastline."EasyAlign /(/ g/\\s\\+\\./ {'lm':0,'rm':0}"
+   silent! exec ":".a:firstline.",".a:lastline."EasyAlign /\./g/\\s\\+\\./l0r0"
+   silent! exec ":".a:firstline.",".a:lastline."EasyAlign /(/g/\\s\\+\\./l0r0"
    
 endfunction
 

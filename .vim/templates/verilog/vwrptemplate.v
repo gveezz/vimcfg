@@ -10,16 +10,16 @@ module $COMPONENT_NAME #(
 ) (
     // System interface
     // -- inputs
-    input wire SClkIn,
-    input wire AsyncRstIn,
-    input wire SyncRstIn,
+    input wire sclk_i,
+    input wire arst_i,
+    input wire srst_i,
     // Data interface
     // --inputs
-    input wire DataVldIn,
-    input wire [DATA_W-1:0] DataIn,
+    input wire data_vld_i,
+    input wire [DATA_W-1:0] data_i,
     // -- outputs
-    output wire DataVldOut,
-    output wire [DATA_W-1:0] DataOut
+    output wire data_vld_o,
+    output wire [DATA_W-1:0] data_o
 );
 
 // External functions and tasks includes

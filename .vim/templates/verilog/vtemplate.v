@@ -10,16 +10,16 @@ module $COMPONENT_NAME #(
 ) /* i_$COMPONENT_NAME */ (
     // System interface
     // -- inputs
-    input wire SClkIn,
-    input wire AsyncRstIn,
-    input wire SyncRstIn,
+    input wire sclk_i,
+    input wire arst_i,
+    input wire srst_i,
     // Data interface
     // -- inputs
-    input wire DataVldIn,
-    input wire [DATA_W-1:0] DataIn,
+    input wire data_vld_i,
+    input wire [DATA_W-1:0] data_i,
     // -- outputs
-    output reg DataVldOut,
-    output reg [DATA_W-1:0] DataOut
+    output reg data_vld_o,
+    output reg [DATA_W-1:0] data_o
 );
 
 // External functions and tasks includes
@@ -37,17 +37,17 @@ module $COMPONENT_NAME #(
 // Modules instantiations
 
 // Module functionality
-always @(posedge SClkIn or negedge AsyncRstIn) begin
-    if (!AsyncRstIn) begin
-        DataVldOut <= 0;
-        DataOut <= 0;
+always @(posedge sclk_i or negedge arst_i) begin
+    if (!arst_i) begin
+        data_vld_o <= 0;
+        data_o <= 0;
     end else begin
-        DataVldOut <= DataVldIn;
-        DataOut <= DataOut;
+        data_vld_o <= data_vld_i;
+        data_o <= data_o;
 
-        if (!SyncRstIn) begin
-            DataVldOut <= 0;
-            DataOut <= 0;
+        if (!srst_i) begin
+            data_vld_o <= 0;
+            data_o <= 0;
         end    
     end
 end

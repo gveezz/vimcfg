@@ -10,16 +10,16 @@ module $COMPONENT_NAME #(
 ) /* i_$COMPONENT_NAME */ (
     // System interface
     // -- inputs
-    input logic SClkIn,
-    input logic AsyncRstIn,
-    input logic SyncRstIn,
+    input logic sclk_i,
+    input logic arst_i,
+    input logic srst_i,
     // Data interface
     // --inputs
-    input logic DataVldIn,
-    input logic [DATA_W-1:0] DataIn,
+    input logic data_vld_i,
+    input logic [DATA_W-1:0] data_i,
     // -- outputs
-    output logic DataVldOut,
-    output logic [DATA_W-1:0] DataOut
+    output logic data_vld_o,
+    output logic [DATA_W-1:0] data_o
 );
 
 // External functions and tasks includes
@@ -41,17 +41,17 @@ always_comb begin
 
 end
 
-always_ff @(posedge SClkIn or negedge AsyncRstIn) begin
-    if (!AsyncRstIn) begin
-        DataVldOut <= 0;
-        DataOut <= 0;
+always_ff @(posedge sclk_i or negedge arst_i) begin
+    if (!arst_i) begin
+        data_vld_o <= 0;
+        data_o <= 0;
     end else begin
-        DataVldOut <= DataVldIn;
-        DataOut <= DataOut;
+        data_vld_o <= data_vld_i;
+        data_o <= data_o;
 
-        if (!SyncRstIn) begin
-            DataVldOut <= 0;
-            DataOut <= 0;
+        if (!srst_i) begin
+            data_vld_o <= 0;
+            data_o <= 0;
         end    
     end
 end
