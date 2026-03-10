@@ -771,7 +771,7 @@ function! GoToLineIntractv()
             call cursor(1, l:col)
          endif
 
-         silent! zz
+         " silent! normal! zz
          silent! redraw
          
          echon "Line: ".l:strIn

@@ -340,7 +340,7 @@ endfunction
 function! vimfm#mkdir() abort
   call s:keep_buffer_singularity()
    
-  let name = input('New directory name: ')
+  let name = input('New directory name: ', '', 'dir')
   if empty(name)
     call vimfm#util#echo('Cancelled.')
     return

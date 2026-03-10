@@ -26,6 +26,8 @@ module $COMPONENT_NAME #(
 
 // Localparams
 
+// I/O ports that depend on localparams
+
 // Sequerntial logic
 
 // Combinational logic

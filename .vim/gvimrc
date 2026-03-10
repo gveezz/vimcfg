@@ -230,7 +230,11 @@ augroup Vim
    autocmd ModeChanged [nvV\x16]*:* let &l:rnu = mode() =~# '^[nvV\x16]'
    " Trigger norelative number when leaving visual mode
    autocmd ModeChanged *:[nvV\x16]* let &l:rnu = mode() =~# '^[nvV\x16]'
-   " autocmd CmdlineLeavePre * if char2nr(v:char) == 13 && getcmdtype() == ':' && getcmdline()[0:1] == '%s' && stridx(getcmdline(), '\/g') != -1 | stridx(getcmdline(), ' | normal! g``') == -1 | call setcmdline(getcmdline().' | normal! g``') | endif
+   " autocmd CmdlineLeavePre * if char2nr(v:char) == 13 && 
+   "                           \ getcmdtype() == ':' && 
+   "                           \ getcmdline()[0:1] == '%s' && 
+   "                           \ stridx(getcmdline(), ' | normal! g``') == -1 | 
+   "                           \ call setcmdline(getcmdline().' | normal! g``') | endif
 augroup END
 
 augroup AutoFoldColumn
@@ -673,8 +677,8 @@ snoremap <silent> <nowait> <End> <Esc>$
 xnoremap <silent> <nowait> <End> $
 
 " <ScrollWheelUp> <ScrollWheelDown>
-inoremap <silent> <nowait> <expr> <ScrollWheelUp> pumvisible() ? "<Up>" : "<C-o>:call ScrollWheelUp(winheight('.')/6)<CR>"
-inoremap <silent> <nowait> <expr> <ScrollWheelDown> pumvisible() ? "<Down>" : "<C-o>:call ScrollWheelDown(winheight('.')/6)<CR>"
+inoremap <silent> <nowait> <ScrollWheelUp> <C-o>:call ScrollWheelUp(winheight('.')/6)<CR>
+inoremap <silent> <nowait> <ScrollWheelDown> <C-o>:call ScrollWheelDown(winheight('.')/6)<CR>
 nnoremap <silent> <nowait> <ScrollWheelUp> :call ScrollWheelUp(winheight('.')/6)<CR>
 nnoremap <silent> <nowait> <ScrollWheelDown> :call ScrollWheelDown(winheight('.')/6)<CR>
 xnoremap <silent> <nowait> <ScrollWheelUp> <C-c>:call ScrollWheelUp(winheight('.')/6)<CR>
