@@ -10,32 +10,39 @@ function! ReloadVimRc ()
    endif
 endfunction
 
-function! AdjTemplate ()
+function! AdjTemplate (...)
 
-   let l:currYear = strftime('%Y')
-   let l:corp = expand($CORP)
-   let l:corpemail = expand($EMAIL)
-   let l:buffPath = expand('%:r')
-   if l:corp == ''
+    let l:comment = '\/\/'
+    let l:acomment = (a:0) ? a:1 : l:comment
+    let l:currYear = strftime('%Y')
+    let l:corp = expand($CORP)
+    let l:corpemail = expand($EMAIL)
+    let l:buffPath = expand('%:r')
+    if l:corp == ''
       let l:corp = '<none>'
-   endif
+    endif
 
-   if l:corpemail == ''
+    if l:corpemail == ''
       let l:corpemail = '<none@domain.com>'
-   endif
+    endif
 
-   let l:component = substitute(expand('%:p:r'), 
+    let l:component = substitute(expand('%:p:r'), 
                      \ expand('%:p:h').'/', '', 'g')
-   
-   silent! exec ":%s/$YEAR/".l:currYear."/g"
-   silent! exec ":%s/$CORP/".l:corp."/g"
-   silent! exec ":%s/$EMAIL/".l:corpemail."/g"
-   silent! exec ":%s/$COMPONENT_NAME/".l:component."/g"
-   silent! exec ":%s/$MACRO/".toupper(l:component)."/g"
-   silent! exec ":%s/$DATE/".strftime("%d-%m-%Y %H:%M")."/g"
-   silent! exec ":%s/$USER/".$USER."/g"
-   silent! exec ":%s/$FILE/".expand("%:t")."/g"
-   silent! :1
+
+    silent! exec ":%s/$YEAR/".l:currYear."/g"
+    silent! exec ":%s/$CORP/".l:corp."/g"
+    silent! exec ":%s/$EMAIL/".l:corpemail."/g"
+    silent! exec ":%s/$COMPONENT_NAME/".l:component."/g"
+    silent! exec ":%s/$MACRO/".toupper(l:component)."/g"
+    silent! exec ":%s/$DATE/".strftime("%d-%m-%Y %H:%M")."/g"
+    silent! exec ":%s/$USER/".$USER."/g"
+    silent! exec ":%s/$FILE/".expand("%:t")."/g"
+
+    if l:acomment != l:comment
+        exec ":%s/".l:comment."/".l:acomment."/g"
+    endif
+    
+    silent! :1
 
 endfunction
 

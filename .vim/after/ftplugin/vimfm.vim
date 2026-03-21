@@ -1,3 +1,8 @@
+let g:vimfm_force_delete = 1
+let g:vimfm_show_hidden_files = 1
+let g:vimfm_linkid_str = '>'
+
+
 setlocal number relativenumber
 setlocal bufhidden=wipe
 "nmap <silent> <nowait> t :call EchoYellowMsg("(!) Open a new tab from a non ".&ft." buffer")<CR>
