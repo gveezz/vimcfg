@@ -1,7 +1,7 @@
 augroup Verilog
    autocmd!
-   autocmd BufReadPost,BufWritePost,BufNewFile,BufRead *.v,*vbkp*,*.vams,*.vh,*.vinc,*.vf set filetype=verilog
-   autocmd BufReadPost,BufWritePost,BufNewFile,BufRead *.sv*,*.svh*,*.svinc,*.svf set filetype=systemverilog
+   autocmd BufReadPost,BufWritePost,BufNewFile,BufRead *.v,*vbkp*,*.vams,*.vh,*.vinc,*.vf,*.vl set filetype=verilog
+   autocmd BufReadPost,BufWritePost,BufNewFile,BufRead *.sv*,*.svh*,*.svinc,*.svf,*svl set filetype=systemverilog
 
    autocmd BufReadPost,BufWritePost,BufNewFile,BufRead *.v,*.vams if line('$') == 1 && getline(1) == '' | call InsTxtFromFile($HOME.'/.vim/templates/header/header.txt', line(1)) | if stridx(expand('%:t'), 'tb') != -1 | call InsTxtFromFile($HOME.'/.vim/templates/verilog/vtbtemplate.v', line('$')) | elseif stridx(expand('%:t'), 'wrp') != -1 | call InsTxtFromFile($HOME.'/.vim/templates/verilog/vwrptemplate.v', line('$')) | else | call InsTxtFromFile($HOME.'/.vim/templates/verilog/vtemplate.v', line('$')) | endif | call InsTxtFromFile($HOME.'/.vim/templates/header/footer.txt', line('$')) | call AdjTemplate() | endif
    

@@ -732,3 +732,10 @@ inoremap <silent> <nowait> <C-S-Left>  <S-Left>b<C-g>
 vnoremap <expr> <silent> <nowait> <C-S-Right> getline('.')[col('.')-1] == ' ' ? "w" : "e"
 vnoremap <expr> <silent> <nowait> <C-S-Left> getline('.')[col('.')-2] == ' ' ? "gel" : "b"
 
+inoremap <silent> <C-}> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
+nnoremap <silent> <C-}> :split<CR>:tag <C-r><C-w><CR><C-o>zz
+vnoremap <silent> <C-}> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
+
+inoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
+nnoremap <silent> <C-]> :split<CR>:tag <C-r><C-w><CR><C-o>zz
+vnoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
