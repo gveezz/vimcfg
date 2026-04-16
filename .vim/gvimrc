@@ -739,3 +739,7 @@ vnoremap <silent> <C-}> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
 inoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
 nnoremap <silent> <C-]> :split<CR>:tag <C-r><C-w><CR><C-o>zz
 vnoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
+
+inoremap <silent> <C-5> <C-o>%
+nnoremap <silent> <C-5> %
+vnoremap <silent> <C-5> %

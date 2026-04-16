@@ -13,4 +13,7 @@ nmap <silent> <nowait> <Tab> <Right>
 nmap <silent> <nowait> <Space> <Down>
 nmap <silent> <nowait> <S-Space> <Up>
 
+nmap <2-LeftMouse> <Right>
+vmap <2-LeftMouse> <Right>
+
 nmap <nowait> <C-S-f> :find **/
