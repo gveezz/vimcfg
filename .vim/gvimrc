@@ -235,9 +235,8 @@ augroup Vim
    "                           \ getcmdline()[0:1] == '%s' && 
    "                           \ stridx(getcmdline(), ' | normal! g``') == -1 | 
    "                           \ call setcmdline(getcmdline().' | normal! g``') | endif
-   
    " remove spourious word after cursor after completition
-   autocmd CompleteDonePre * if strlen(v:completed_item['word']) | normal! cw | endif
+   autocmd CompleteDonePre * silent! if has_key(v:completed_item, 'word') | normal! cw<Space> | endif
 augroup END
 
 augroup AutoFoldColumn
