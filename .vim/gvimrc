@@ -227,14 +227,17 @@ augroup Vim
    autocmd CursorMoved,CursorMovedI * silent! call HighlightWordUnderCursor()
 
    " Trigger relative number when entering visual mode,
-   autocmd ModeChanged [nvV\x16]*:* let &l:rnu = mode() =~# '^[nvV\x16]'
+   autocmd ModeChanged [vV\x16]*:* let &l:rnu = mode() =~# '^[vV\x16]'
    " Trigger norelative number when leaving visual mode
-   autocmd ModeChanged *:[nvV\x16]* let &l:rnu = mode() =~# '^[nvV\x16]'
+   autocmd ModeChanged *:[vV\x16]* let &l:rnu = mode() =~# '^[vV\x16]'
    " autocmd CmdlineLeavePre * if char2nr(v:char) == 13 && 
    "                           \ getcmdtype() == ':' && 
    "                           \ getcmdline()[0:1] == '%s' && 
    "                           \ stridx(getcmdline(), ' | normal! g``') == -1 | 
    "                           \ call setcmdline(getcmdline().' | normal! g``') | endif
+   
+   " remove spourious word after cursor after completition
+   autocmd CompleteDonePre * if strlen(v:completed_item['word']) | normal! cw | endif
 augroup END
 
 augroup AutoFoldColumn
@@ -743,3 +746,5 @@ vnoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
 inoremap <silent> <C-5> <C-o>%
 nnoremap <silent> <C-5> %
 vnoremap <silent> <C-5> %
+
+" nnoremap <silent> <nowait> <2-LeftMouse> viw<C-g>
