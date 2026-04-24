@@ -1548,6 +1548,14 @@ function! SwapStr (a, b) range
     silent! exec a:firstline.",".a:lastline."s/".l:a_rnd."/".a:b."/g"
 endfunction
 
+function! Complete()
+    if has_key(v:completed_item, 'word') && strlen(v:completed_item['word'])
+        if getline('.')[col('.')-1] !~ ' ' 
+            silent! call feedkeys("\<C-Delete>\<Space>")
+        endif
+    endif 
+endfunction
+
 " highlight the visual selection after pressing enter.
 "snoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
 " vnoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>
