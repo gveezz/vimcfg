@@ -236,7 +236,7 @@ augroup Vim
    "                           \ stridx(getcmdline(), ' | normal! g``') == -1 | 
    "                           \ call setcmdline(getcmdline().' | normal! g``') | endif
    " remove spourious word after cursor after completition
-   " autocmd CompleteDonePre * silent! if has_key(v:completed_item, 'word') | if getline('.')[col('.')-1] != ' ' > | endif
+   " autocmd CompleteDonePre * silent! if has_key(v:completed_item, 'word') | if stridx(v:completed_item['word'], getline('.')[col('.')-1]) != -1 | normal! ved<Right> | endif
    " autocmd CompleteDonePre * silent! call Complete()<CR>
    " autocmd CompleteDonePre * echo complete_info(['complete_word'])
 augroup END
@@ -747,5 +747,9 @@ vnoremap <silent> <C-]> <C-o>:split<CR><C-o>:tag <C-r><C-w><CR><C-o>zz
 inoremap <silent> <C-5> <C-o>%
 nnoremap <silent> <C-5> %
 vnoremap <silent> <C-5> %
+
+snoremap <silent> <nowait> <M-l> <Cmd>:set relativenumber!<CR>
+xnoremap <silent> <nowait> <M-l> <Cmd>:set relativenumber!<CR>
+nnoremap <silent> <nowait> <M-l> <Cmd>:set relativenumber!<CR>
 
 " nnoremap <silent> <nowait> <2-LeftMouse> viw<C-g>
