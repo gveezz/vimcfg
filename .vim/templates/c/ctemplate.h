@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 
-// Includes
-
 // Macros
+    
+// Includes
 
 // Typedefs
 

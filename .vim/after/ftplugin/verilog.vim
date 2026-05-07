@@ -278,7 +278,7 @@ function! HasWireRegDeclaration()
    else
       return stridx(getline('.'), 'reg ') >= 0 ||
            \ stridx(getline('.'), 'wire ') >= 0
-   fi
+   endif
 endfunction
 
 function! HasIODeclaration()
@@ -288,8 +288,7 @@ function! HasIODeclaration()
       return stridx(getline('.'), 'input ') >= 0 || 
            \ stridx(getline('.'), 'output ') >= 0 ||
            \ stridx(getline('.'), 'inout ') >= 0
-
-   fi
+   endif
 endfunction
 
 function! HasParamDeclaration()
@@ -297,11 +296,9 @@ function! HasParamDeclaration()
       return 0
    else
       return stridx(getline('.'), 'parameter ') >= 0
-   fi
+   endif
 endfunction
 
 function! HasDeclaration()
-   return HasIODeclaration() || 
-          \ HasWireRegDeclaration() || 
-          \ HasParamDeclaration()
+   return HasIODeclaration() || HasWireRegDeclaration() || HasParamDeclaration()
 endfunction
