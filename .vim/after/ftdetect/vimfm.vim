@@ -1,4 +1,4 @@
-augroup Vimfm
-   autocmd!
-   autocmd FileType vimfm stopinsert
-augroup END
+" augroup Vimfm
+"    autocmd!
+"    autocmd FileType vimfm stopinsert
+" augroup END
