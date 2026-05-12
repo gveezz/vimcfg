@@ -215,13 +215,12 @@ function! GuiSave()
    if (&ft == 'nerdtree')
       call EchoYellowMsg("Hey dude, you're in nerdtree window...")
    else
-     " :%s/\s*$//g
-      if empty(bufname('%'))
-         browse confirm write
-      else
-         :w!
-      endif
-      " :
+        " :%s/\s*$//g
+        if empty(bufname('%'))
+           browse confirm write
+        else
+           :w!
+        endif
    endif
 
 endfunction

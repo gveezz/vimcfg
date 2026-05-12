@@ -106,7 +106,7 @@ set laststatus=2
 set statusline=\ %{GetMode()}\ 
 set statusline+=\ %=%{expand('%:p:~')}\ %y\ %m%r
 set statusline+=\ b#%n,\ w#%{winnr()},\ t#%{tabpagenr()}
-set statusline+=\ (%l\/\%L,\%c)\ 
+set statusline+=\ (%l\/\%L,\%c)\
 set backspace=indent,eol,start
 set guicursor=n:ver100-blinkoff0-nCursor
 set guicursor+=o:ver100-blinkon250-blinkoff250-nCursor
@@ -521,7 +521,7 @@ snoremap <nowait> <C-l> <C-o>:call BufferList()<CR>
 " snoremap <nowait> <M-l> <C-o>:FuzzyFiles<CR>
 
 " C-s: save
-inoremap <nowait> <C-s> <Cmd>:call GuiSave()<CR>
+inoremap <nowait> <expr> <C-s> pumvisible() ? "<C-y><C-o>:call GuiSave()<CR>" : "<C-o>:call GuiSave()<CR>"
 nnoremap <nowait> <C-s> :call GuiSave()<CR>
 xnoremap <nowait> <C-s> <Cmd>:call GuiSave()<CR>
 snoremap <nowait> <C-s> <Cmd>:call GuiSave()<CR>
