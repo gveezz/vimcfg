@@ -5,6 +5,7 @@ always_ff
 always_latch
 assert
 assume
+automatic
 before
 begin
 bind
@@ -38,6 +39,7 @@ endcase
 endchecker
 endclass
 endclocking
+endgenerate
 endgroup
 endinterface
 endpackage
@@ -55,6 +57,7 @@ final
 first_match
 foreach
 forkjoin
+generate
 global s_until_with
 iff 
 ignore_bins
