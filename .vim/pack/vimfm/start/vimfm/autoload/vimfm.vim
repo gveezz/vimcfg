@@ -297,7 +297,7 @@ function! vimfm#delete_selected() abort
                 \ ? "Delete '".items[0].basename."' (Y/n)? "
                 \ : "Delete ".len(items)." selected files (y/N)? "
     let yn = input(message)
-    if yn == 'n' || yn == 'N'
+    if yn == 'n' || yn == 'N' || yn == ""
         call vimfm#util#echo('Cancelled.')
         return
     endif
