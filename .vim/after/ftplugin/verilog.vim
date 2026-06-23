@@ -253,8 +253,8 @@ function! FormatIoInstance() range
     " Append ) when last parameter ofathe list is found
     silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|,\\|^$/g/parameter /normal! A)"
     silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|,\\|^$/g/localparam /normal! A)"
-    silent! exec ":".a:firstline.",".a:lastline."v/^\\\s\\+\\/\\/\\|^$/s/module \\s\\+\\|input \\s\\+\\|parameter \\s\\+\\|localparam \\s\\+\\|integer \\s\\+\\|real \\s\\+\\|wire \\s\\+\\|output \\s\\+\\|reg \\s\\+\\|logic \\s\\+\\|\\[.*\\]\\s\\+ //g"
-    silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|^$/s/module \\|input \\|parameter \\|localparam \\|integer \\|real \\|wire \\|output \\|reg \\|logic \\|\\[.*\\] //g"
+    silent! exec ":".a:firstline.",".a:lastline."v/^\\\s\\+\\/\\/\\|^$/s/module \\s\\+\\|interface \\s\\+\\|input \\s\\+\\|parameter \\s\\+\\|localparam \\s\\+\\|integer \\s\\+\\|real \\s\\+\\|wire \\s\\+\\|output \\s\\+\\|reg \\s\\+\\|logic \\s\\+\\|\\[.*\\]\\s\\+ //g"
+    silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|^$/s/module \\|interface \\|input \\|parameter \\|localparam \\|integer \\|real \\|wire \\|output \\|reg \\|logic \\|\\[.*\\] //g"
     silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|).*(\\|);\\|#(\\|^$/normal! I."
     silent! exec ":".a:firstline.",".a:lastline."v/\\s\\+\\/\\/\\|(\\|)\\|^$/s/\\s\\+$//g"
     silent! exec ":".a:firstline.",".a:lastline."v/^\\s\\+\\/\\/\\|(\\|)\\|^$/s/,/(),/g"
