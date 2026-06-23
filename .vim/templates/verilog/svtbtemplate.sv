@@ -17,7 +17,7 @@ module $COMPONENT_NAME ();
 
 // Wires assignments
 
-// Integers and Reals
+// Integers, strings, reals ...
 
 // Modules instantiations
 
